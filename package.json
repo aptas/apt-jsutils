@@ -1,0 +1,13 @@
+{
+	"name": "apt-jsutils",
+	"description": "Collection of JavaScript utilities maintained by the APT front end team.",
+	"version": "0.0.1",
+	"author": "aptas <teknisk@apt.no>",
+	"keywords": ["javascript", "library", "tools", "utilities"],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/aptas/apt-jsutils.git"
+	},
+	"readmefile": "README.md",
+	"readme": "Collection of JavaScript utilities maintained by the APT front end team."
+}
