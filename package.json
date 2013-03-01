@@ -12,6 +12,10 @@
 		"type": "git",
 		"url": "https://github.com/aptas/apt-jsutils.git"
 	},
+	"scripts" : {
+		"prepublish" : "mocha -R spec",
+		"test" : "mocha -R spec"
+	},
 	"readmefile": "README.md",
 	"readme": "Collection of JavaScript utilities maintained by the APT front end team."
 }

@@ -2,10 +2,9 @@ var chai = require ('../node_modules/chai/chai');
 var assert = chai.assert;
 tokenize = require ('../src/string/tokenize');
 
-describe('tokenize', function(){
-  describe('string template', function(){
+describe('tokenize >', function(){
+  describe('string template >', function(){
     describe('object values', function(){
-
       it('shoud replace token at beginning of string', function(){
         var src = '{token} static';
         var ctl = 'value static';
@@ -53,6 +52,44 @@ describe('tokenize', function(){
         var ctl = 'static {token}';
         var res = tokenize(src, {foo:'bar'});
         assert.equal(ctl, res);
+      });
+    });
+    describe('string splat values >', function(){
+      it('shoud replace one token', function(){
+        var src = '{token} static';
+        var ctl = 'value static';
+        var res = tokenize(src, 'value');
+        assert.equal(ctl, res);
+      });
+      it('shoud replace two tokens', function(){
+        var src = '{token} static {baken}';
+        var ctl = 'foo static bar';
+        var res = tokenize(src, 'foo', 'bar');
+        assert.equal(ctl, res);
+      });
+      it('shoud replace many tokens', function(){
+        var src = '{token1} static {token2} {token3} static {token4}';
+        var ctl = 'foo static bar lorem static ipsum';
+        var res = tokenize(src, 'foo', 'bar', 'lorem', 'ipsum');
+        assert.equal(ctl, res);
+      });
+    });
+  });
+  describe('object template >', function(){
+    describe('object values', function(){
+      it('shoud replace token in both props', function(){
+        var src = { string1 : '{token} static', string2 : '{token} static' };
+        var ctl = { string1 : 'value static', string2 : 'value static' };
+        var res = tokenize(src, {token:'value'});
+        assert.deepEqual(ctl, res);
+      });
+    });
+    describe('string splat values >', function(){
+      it('shoud replace token in both props', function(){
+        var src = { string1 : '{1} static', string2 : '{2} static' };
+        var ctl = { string1 : 'foo static', string2 : 'bar static' };
+        var res = tokenize(src, 'foo', 'bar');
+        assert.deepEqual(ctl, res);
       });
     });
   });

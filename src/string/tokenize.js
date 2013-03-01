@@ -1,16 +1,28 @@
 module.exports = function(template, values) {
-	var wasObj, tmpl;
-	if (typeof template !== 'string') {
-			wasObj = true;
-			tmpl = JSON.stringify(template);
-	}
-	else tmpl = template;
+  var wasObj, tmpl, res, p;
 
-	var result = tmpl.replace(/\{\w+\}/g, function (match, group, offset, string) {
-		var prop = match.match(/\w+/)[0];
-		return values[prop] || match;
-	});
+  if (typeof template !== 'string') {
+    wasObj = true;
+    tmpl = JSON.stringify(template);
+  }
+  else tmpl = template;
 
-	if (wasObj) result = JSON.parse(result);
-	return result;
+  if (typeof(arguments[1]) === 'string') {
+    var args = [];
+    for (var i = 1; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+    res = tmpl.replace(/\{\w+\}/g, function (match, group, offset, string) {
+      return args.shift();
+    });
+  }
+  else {
+    res = tmpl.replace(/\{\w+\}/g, function (match, group, offset, string) {
+      p = match.match(/\w+/)[0];
+      return values[p] || match;
+    });
+  }
+
+  if (wasObj) res = JSON.parse(res);
+  return res;
 };
